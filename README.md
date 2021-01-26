@@ -8,7 +8,7 @@ This repository serves as a public version for our private repository. All sensi
   <li> MicroPython code for 3 types ESP32 based sensor modules </li>
   <li> Python code for Django backend that serves as a hub for aforementioned sensor modules </li>
   <li> Python code for MQTT Subscriber service to forward sensor measurements to a hub </li>
-  <li> Unfinished VueJs frontend </li>
+  <li> Unfinished Vue.Js frontend </li>
 </ul>
 
 <h2> Sensor wiring </h2>
