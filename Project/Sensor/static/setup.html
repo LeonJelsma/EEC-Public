@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>EEC Sensor Setup</title>
+</head>
+<body>
+<ul><a href="/">Back to menu</a></ul>
+<h1>Welcome to the EEC sensor setup.</h1>
+<h2>Please enter the connection details for </h2>
+<button type="button" onload="load_aps()" onclick="load_aps()">Refresh access points</button>
+<form onsubmit="post_credentials(); return false;">
+    <div>
+        <label for="SSiD">SSiD:</label><br>
+        <select id="apSelection" name="SSiD" id="SSiD">
+        </select>
+    </div>
+    <div>
+        <label for="password">Password:</label><br>
+        <input type="text" id="password" name="password">
+    </div>
+    <input type="submit" value="Submit">
+</form>
+</body>
+</html>
+<script>
+    function load_aps() {
+        var xhttp = new XMLHttpRequest();
+
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                let data = JSON.parse(this.responseText)
+                let select = document.getElementById('apSelection');
+
+                let i, L = select.options.length - 1;
+                for (i = L; i >= 0; i--) {
+                    select.remove(i);
+                }
+
+                for (let i in data) {
+                    select.add(new Option(data[i], data[i]));
+                }
+            }
+        };
+        xhttp.open("GET", "/api/accesspoints", true);
+        xhttp.send();
+    }
+
+    function post_credentials() {
+        var xhttp = new XMLHttpRequest();
+        let form_data = {}
+        form_data.SSiD = document.getElementById("apSelection").value
+        form_data.password = document.getElementById("password").value
+        xhttp.open("POST", "/api/setup", true);
+        xhttp.send(JSON.stringify(form_data));
+    }
+</script>
